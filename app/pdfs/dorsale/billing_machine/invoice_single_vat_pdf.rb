@@ -242,11 +242,14 @@ module Dorsale
 
 
           @main_document.lines.each do |line|
+            printed_quantity = number(line.quantity).gsub(",00","").gsub(".00","") if line.quantity > 0
+            printed_unit_price = euros(line.unit_price) if line.unit_price > 0
+            printed_line_total = euros(line.total) if line.total > 0
             table_products.push [line.label,
-                number(line.quantity).gsub(",00","").gsub(".00",""),
+                printed_quantity,
                 line.unit,
-                euros(line.unit_price),
-                euros(line.total),]
+                printed_unit_price,
+                printed_line_total,]
           end
 
         table table_products,
