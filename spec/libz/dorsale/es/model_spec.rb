@@ -5,7 +5,7 @@ describe Dorsale::ES::Model do
     Dorsale::ES::Services.delete_index!
     Dorsale::ES::Services.create_index!
     def self.wait_es_refresh
-      sleep 1
+      sleep 2
     end
   end
 
