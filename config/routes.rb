@@ -7,12 +7,9 @@ Dorsale::Engine.routes.draw do
     resources :filters, only: [:create]
   end
 
-
-
   namespace :alexandrie do
     resources :attachments, only: [:create, :edit, :update, :destroy]
   end
-
 
   namespace :flyboy do
     resources :folders do

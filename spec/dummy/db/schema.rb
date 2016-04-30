@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160317124838) do
+ActiveRecord::Schema.define(version: 20160429173412) do
 
   create_table "dorsale_addresses", force: :cascade do |t|
     t.string   "street"
@@ -295,8 +295,15 @@ ActiveRecord::Schema.define(version: 20160317124838) do
 
   create_table "dummy_models", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "string_field"
+    t.text     "text_field"
+    t.integer  "integer_field"
+    t.decimal  "decimal_field"
+    t.date     "date_field"
+    t.datetime "datetime_field"
+    t.boolean  "boolean_field"
   end
 
   create_table "taggings", force: :cascade do |t|

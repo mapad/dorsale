@@ -15,6 +15,9 @@ PATH
       cocoon
       coffee-rails
       combine_pdf
+      elasticsearch
+      elasticsearch-api
+      elasticsearch-model
       font-awesome-sass
       handles_sortable_columns
       jquery-rails
@@ -148,6 +151,18 @@ GEM
     devise-bootstrap-views (0.0.6)
     devise-i18n (0.12.1)
     diff-lcs (1.2.5)
+    elasticsearch (1.0.17)
+      elasticsearch-api (= 1.0.17)
+      elasticsearch-transport (= 1.0.17)
+    elasticsearch-api (1.0.17)
+      multi_json
+    elasticsearch-model (0.1.8)
+      activesupport (> 3)
+      elasticsearch (> 0.4)
+      hashie
+    elasticsearch-transport (1.0.17)
+      faraday
+      multi_json
     erubis (2.7.0)
     exception_notification (4.1.1)
       actionmailer (>= 3.0.4)
@@ -160,6 +175,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.5.0)
       i18n (~> 0.5)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.10)
     font-awesome-sass (4.5.0)
       sass (>= 3.2)
@@ -191,6 +208,7 @@ GEM
       rubocop (~> 0.20)
     handles_sortable_columns (0.1.4)
     hashery (2.1.1)
+    hashie (3.4.4)
     htmlentities (4.3.1)
     i18n (0.7.0)
     jquery-rails (4.1.1)
@@ -219,6 +237,7 @@ GEM
     minitest (5.8.1)
     multi_json (1.11.2)
     multi_test (0.1.2)
+    multipart-post (2.0.0)
     nenv (0.2.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -352,6 +371,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.11)
     temple (0.7.6)
+    test_after_commit (0.4.2)
+      activerecord (>= 3.2)
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
@@ -406,6 +427,7 @@ DEPENDENCIES
   rspec-rails
   shoulda-matchers (= 2.5.0)
   sqlite3
+  test_after_commit
   thor
   timecop
   uglifier

@@ -43,7 +43,6 @@ require "dorsale/alexandrie/prawn"
 require "acts-as-taggable-on"
 require "active_record_comma_type_cast"
 
-
 module Dorsale
   class Engine < ::Rails::Engine
     isolate_namespace Dorsale
@@ -52,6 +51,10 @@ module Dorsale
       if %w(development test).include?(Rails.env)
         FactoryGirl.definition_file_paths.unshift Dorsale::Engine.root.join("spec/factories/").to_s
       end
+    end
+
+    initializer "sortable_attributes" do
+      ActiveRecord::Base.send(:prepend, Dorsale::SortableAttributes)
     end
 
     Mime::Type.register "application/vnd.ms-excel", :xls

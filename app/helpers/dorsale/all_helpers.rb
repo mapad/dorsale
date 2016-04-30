@@ -11,10 +11,12 @@ module Dorsale
     include ::Dorsale::PaginationHelper
     include ::Dorsale::RoutesHelper
     include ::Dorsale::TextHelper
+    include ::Dorsale::ES::ViewHelper
 
     include ::Dorsale::Alexandrie::AttachmentsHelper
     include ::Dorsale::Flyboy::ApplicationHelper
     include ::Dorsale::UsersHelper
+
 
     extend self
   end

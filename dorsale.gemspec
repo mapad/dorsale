@@ -17,6 +17,9 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
 
+  # Important notes :
+  # - Kaminari should be loaded BEFORE ElasticSearch
+
   s.add_dependency "rails", ">= 4.0.0"
   s.add_dependency "slim-rails"
   s.add_dependency "sass-rails"
@@ -47,4 +50,7 @@ Gem::Specification.new do |s|
   s.add_dependency "mini_magick"
   s.add_dependency "rake"
   s.add_dependency "axlsx"
+  s.add_dependency "elasticsearch"
+  s.add_dependency "elasticsearch-api"
+  s.add_dependency "elasticsearch-model"
 end

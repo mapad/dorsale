@@ -8,10 +8,9 @@ else
 end
 
 gem "rails", "~> 4.2.1"
-gem 'devise'
-gem 'devise-bootstrap-views'
-gem 'devise-i18n'
-gem "database_cleaner"
+gem "devise"
+gem "devise-bootstrap-views"
+gem "devise-i18n"
 
 gemspec
 
@@ -23,6 +22,8 @@ group :production, :development do
 end
 
 group :development, :test do
+  gem "test_after_commit"
+  gem "database_cleaner"
   gem "thor"
   gem "pry"
   gem "sqlite3"
