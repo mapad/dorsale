@@ -60,6 +60,11 @@ describe Dorsale::ES::SearchBuilder do
       end
     end
 
+    it "should accept french formatted dates" do
+      search = subject.new(filters: {"date:" => "15/06/2015"})
+      expect(search.filters).to eq ["date:2015-06-15"]
+    end
+
     describe "magic values" do
       before do
         Timecop.freeze("2016-05-11 15:30:00")

@@ -88,6 +88,10 @@ class Dorsale::ES::SearchBuilder
       value = value.to_s
     end
 
+    if value.match(/\A[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4}\z/)
+      value = value.split("/").reverse.join("-")
+    end
+
     if value == "_missing_" || value == "_null_"
       key = key.chomp(":")
       return "_missing_:#{key}"
