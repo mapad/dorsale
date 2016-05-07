@@ -81,12 +81,19 @@ describe Dorsale::ES::Model do
       expect(entries).to eq [benoit]
     end
 
-    it "should accept accept accented keywords" do
+    it "should work with accented keywords" do
       zoe = DummyModel.create!(name: "Zoé")
       wait_es_refresh
-      sleep 1
 
       entries = DummyModel.es(keywords: "zoe").entries
+      expect(entries).to eq [zoe]
+    end
+
+    it "should work with accented keywords alt" do
+      zoe = DummyModel.create!(name: "Zoe")
+      wait_es_refresh
+
+      entries = DummyModel.es(keywords: "zoé").entries
       expect(entries).to eq [zoe]
     end
 

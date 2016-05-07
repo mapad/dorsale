@@ -75,7 +75,8 @@ class Dorsale::ES::SearchBuilder
 
   def normalize_keywords(keywords)
     keywords.to_s.downcase.split(" ").reverse.each_with_index.map do |keyword, index|
-      index = index+1
+      keyword = ActiveSupport::Inflector.transliterate(keyword)
+      index   = index+1
 
       "*#{keyword}*^#{index}"
     end.reverse.join(" OR ")

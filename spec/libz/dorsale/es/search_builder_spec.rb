@@ -21,6 +21,11 @@ describe Dorsale::ES::SearchBuilder do
       expect(search.es_query_string).to eq "(*benoit*^2 OR *sophie*^1)"
     end
 
+    it "should remove accents" do
+      search = subject.new(keywords: "benoît")
+      expect(search.es_query_string).to eq "(*benoit*^1)"
+    end
+
     it "should not parse complex queries" do
       search = subject.new(keywords: "benoit OR sophie")
       expect(search.es_query_string).to eq "(benoit OR sophie)"
