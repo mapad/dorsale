@@ -8,7 +8,7 @@ describe Dorsale::ES::SearchBuilder do
   it "should raise on invalid options" do
     expect {
       subject.new(a: 1, b: 2)
-    }.to raise_error(ArgumentError, "Invalid option(s): a, b.")
+    }.to raise_error(ArgumentError, "Unknown option(s): a, b.")
   end
 
   describe "keywords" do
@@ -37,8 +37,18 @@ describe Dorsale::ES::SearchBuilder do
 
   describe "filters" do
     it "should merge with filters" do
+      search = subject.new(filters: {"name" => "benoit"})
+      expect(search.es_query_string).to eq "(name:benoit) AND (*)"
+    end
+
+    it "should accept operator" do
       search = subject.new(filters: {"name:" => "benoit"})
       expect(search.es_query_string).to eq "(name:benoit) AND (*)"
+    end
+
+    it "should accept operator alt" do
+      search = subject.new(filters: {"name:<=" => "benoit"})
+      expect(search.es_query_string).to eq "(name:<=benoit) AND (*)"
     end
 
     it "should not include blank filters keys" do
@@ -47,26 +57,26 @@ describe Dorsale::ES::SearchBuilder do
     end
 
     it "should not include blank filters values" do
-      search = subject.new(filters: {"name:" => ""})
+      search = subject.new(filters: {"name" => ""})
       expect(search.filters).to eq []
     end
 
     it "should convert date object to queryable string" do
       Timecop.travel "2015-06-15" do
-        search = subject.new(filters: {"date:" => Date.today})
+        search = subject.new(filters: {"date" => Date.today})
         expect(search.filters).to eq ["date:2015-06-15"]
       end
     end
 
     it "should convert date object to queryable string" do
       Timecop.travel "2015-06-15 16:30:00" do
-        search = subject.new(filters: {"date:" => Time.now})
+        search = subject.new(filters: {"date" => Time.now})
         expect(search.filters).to eq ["date:2015-06-15"]
       end
     end
 
     it "should accept french formatted dates" do
-      search = subject.new(filters: {"date:" => "15/06/2015"})
+      search = subject.new(filters: {"date" => "15/06/2015"})
       expect(search.filters).to eq ["date:2015-06-15"]
     end
 
@@ -75,7 +85,7 @@ describe Dorsale::ES::SearchBuilder do
         Timecop.freeze("2016-05-11 15:30:00")
 
         def self.get_generated_filter_for(value)
-          search = subject.new(filters: {"date:" => value})
+          search = subject.new(filters: {"date" => value})
           expect(search.filters.length).to eq 1
           search.filters.first
         end
@@ -137,24 +147,24 @@ describe Dorsale::ES::SearchBuilder do
 
   describe "(not) null magic values" do
     it "_missing_" do
-      search = subject.new(filters: {"name:" => "_missing_"})
+      search = subject.new(filters: {"name" => "_missing_"})
       expect(search.filters).to eq ["_missing_:name"]
     end
 
     it "_exists_" do
-      search = subject.new(filters: {"name:" => "_exists_"})
+      search = subject.new(filters: {"name" => "_exists_"})
       expect(search.filters).to eq ["_exists_:name"]
     end
 
     # _missing_ alias
     it "_null_" do
-      search = subject.new(filters: {"name:" => "_null_"})
+      search = subject.new(filters: {"name" => "_null_"})
       expect(search.filters).to eq ["_missing_:name"]
     end
 
     # _exists_ alias
     it "_not_null_" do
-      search = subject.new(filters: {"name:" => "_not_null_"})
+      search = subject.new(filters: {"name" => "_not_null_"})
       expect(search.filters).to eq ["_exists_:name"]
     end
   end

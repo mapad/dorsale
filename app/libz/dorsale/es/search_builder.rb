@@ -12,7 +12,7 @@ class Dorsale::ES::SearchBuilder
     self.per_page = options.delete(:per_page)
 
     if options.any?
-      raise ArgumentError, "Invalid option(s): #{options.keys.join(", ")}."
+      raise ArgumentError, "Unknown option(s): #{options.keys.join(", ")}."
     end
   end
 
@@ -83,6 +83,12 @@ class Dorsale::ES::SearchBuilder
   end
 
   def normalize_filter(key, value)
+    if key.include?(":")
+      key, operator = key.split(/(:.*)/)
+    else
+      operator = ":"
+    end
+
     if value.is_a?(Time)
       value = value.utc.to_date.to_s
     else
@@ -94,21 +100,19 @@ class Dorsale::ES::SearchBuilder
     end
 
     if value == "_missing_" || value == "_null_"
-      key = key.chomp(":")
       return "_missing_:#{key}"
     end
 
-    if value == "_exists_"  || value == "_not_null_"
-      key = key.chomp(":")
+    if value == "_exists_" || value == "_not_null_"
       return "_exists_:#{key}"
     end
 
     if value == "_blank_"
-      return "#{key}(-/.+/)"
+      return "#{key}:(-/.+/)"
     end
 
     if value == "_not_blank_"
-      return "#{key}(/.+/)"
+      return "#{key}:(/.+/)"
     end
 
     value = value.gsub /_today_/ do |m|
@@ -137,7 +141,7 @@ class Dorsale::ES::SearchBuilder
       "[#{date1} TO #{date2}]"
     end
 
-    "#{key}#{value}"
+    "#{key}#{operator}#{value}"
   end
 
 end

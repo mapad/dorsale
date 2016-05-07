@@ -212,22 +212,22 @@ describe Dorsale::ES::Model do
       end
 
       it "should filter single word" do
-        entries = DummyModel.es(filters: {"name:" => "pending"}).entries
+        entries = DummyModel.es(filters: {"name" => "pending"}).entries
         expect(entries).to eq [pending]
       end
 
       it "should filter not single word" do
-        entries = DummyModel.es(filters: {"name:" => "(-pending)"}).entries
+        entries = DummyModel.es(filters: {"name" => "(-pending)"}).entries
         expect(entries).to eq [accepted, refused]
       end
 
       it "should filter multiple word" do
-        entries = DummyModel.es(filters: {"name:" => "(accepted refused)"}).entries
+        entries = DummyModel.es(filters: {"name" => "(accepted refused)"}).entries
         expect(entries).to eq [accepted, refused]
       end
 
       it "should filter not multiple word" do
-        entries = DummyModel.es(filters: {"name:" => "(-accepted -refused)"}).entries
+        entries = DummyModel.es(filters: {"name" => "(-accepted -refused)"}).entries
         expect(entries).to eq [pending]
       end
     end # describe "strings"
@@ -241,12 +241,12 @@ describe Dorsale::ES::Model do
       end
 
       it "should return true results" do
-        entries = DummyModel.es(filters: {"boolean_field:" => true}).entries
+        entries = DummyModel.es(filters: {"boolean_field" => true}).entries
         expect(entries).to eq [t]
       end
 
       it "should return false results" do
-        entries = DummyModel.es(filters: {"boolean_field:" => false}).entries
+        entries = DummyModel.es(filters: {"boolean_field" => false}).entries
         expect(entries).to eq [f]
       end
     end # describe "booleans"
@@ -261,42 +261,42 @@ describe Dorsale::ES::Model do
       end
 
       it "should return null results" do
-        entries = DummyModel.es(filters: {"name:" => "_null_"}).entries
+        entries = DummyModel.es(filters: {"name" => "_null_"}).entries
         expect(entries).to include null
         expect(entries).to_not include blank
         expect(entries).to_not include string
       end
 
       it "should return not null results" do
-        entries = DummyModel.es(filters: {"name:" => "_not_null_"}).entries
+        entries = DummyModel.es(filters: {"name" => "_not_null_"}).entries
         expect(entries).to include string
         expect(entries).to include blank
         expect(entries).to_not include null
       end
 
       it "should return null results" do
-        entries = DummyModel.es(filters: {"name:" => "_missing_"}).entries
+        entries = DummyModel.es(filters: {"name" => "_missing_"}).entries
         expect(entries).to include null
         expect(entries).to_not include blank
         expect(entries).to_not include string
       end
 
       it "should return not null results" do
-        entries = DummyModel.es(filters: {"name:" => "_exists_"}).entries
+        entries = DummyModel.es(filters: {"name" => "_exists_"}).entries
         expect(entries).to include string
         expect(entries).to include blank
         expect(entries).to_not include null
       end
 
       it "should return blank results" do
-        entries = DummyModel.es(filters: {"name:" => "_blank_"}).entries
+        entries = DummyModel.es(filters: {"name" => "_blank_"}).entries
         expect(entries).to include null
         expect(entries).to include blank
         expect(entries).to_not include string
       end
 
       it "should return not blank results" do
-        entries = DummyModel.es(filters: {"name:" => "_not_blank_"}).entries
+        entries = DummyModel.es(filters: {"name" => "_not_blank_"}).entries
         expect(entries).to include string
         expect(entries).to_not include blank
         expect(entries).to_not include null
@@ -312,13 +312,13 @@ describe Dorsale::ES::Model do
       end
 
       it "should filter by date eq" do
-        entries = DummyModel.es(filters: {"date_field:" => "2015-06-10"}).entries
+        entries = DummyModel.es(filters: {"date_field" => "2015-06-10"}).entries
         expect(entries).to eq [d1]
       end
 
       it "should filter by date range" do
         Timecop.travel "2015-06-10" do
-          entries = DummyModel.es(filters: {"date_field:" => "_this_week_"}).entries
+          entries = DummyModel.es(filters: {"date_field" => "_this_week_"}).entries
           expect(entries).to eq [d1]
         end
       end
@@ -333,7 +333,7 @@ describe Dorsale::ES::Model do
       end
 
       it "should filter by date eq" do
-        entries = DummyModel.es(filters: {"date_field:" => "2015-06-10"}).entries
+        entries = DummyModel.es(filters: {"date_field" => "2015-06-10"}).entries
         expect(entries).to eq [d1]
       end
     end # describe "dates"
