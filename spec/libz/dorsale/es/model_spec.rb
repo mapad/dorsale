@@ -34,7 +34,7 @@ describe Dorsale::ES::Model do
   end # describe "default order"
 
   describe "sorting" do
-    it "should sort" do
+    it "should sort by string" do
       ("A".."Z").to_a.shuffle.each do |letter|
         DummyModel.create!(name: letter)
       end
@@ -42,6 +42,28 @@ describe Dorsale::ES::Model do
 
       entries = DummyModel.es(sort: "name:asc").entries
       expect(entries.first.name).to eq "A"
+    end
+
+    it "should sort by number" do
+      (1..20).to_a.shuffle.each do |number|
+        DummyModel.create!(integer_field: number)
+      end
+      wait_es_refresh
+
+      entries = DummyModel.es(sort: "integer_field:asc").entries
+      expect(entries.first.integer_field).to eq 1
+    end
+
+    it "should sort by date" do
+      DummyModel.create!(date_field: "2012-05-23")
+      DummyModel.create!(date_field: "2012-09-23")
+      DummyModel.create!(date_field: "2012-01-23")
+      wait_es_refresh
+
+      entries      = DummyModel.es(sort: "date_field:asc").entries
+      sorted_dates = entries.map { |e| e.date_field.to_s }
+
+      expect(sorted_dates).to eq ["2012-01-23", "2012-05-23", "2012-09-23"]
     end
   end # describe "sorting"
 
