@@ -161,11 +161,6 @@ describe Dorsale::ES::Model do
         entries = DummyModel.es(filters: {"integer_field:>=" => 10}).entries
         expect(entries).to eq [b]
       end
-
-      xit "should accept decimal" do
-        entries = DummyModel.es(filters: {"integer_field:>=" => "5.5"}).entries
-        expect(entries).to eq [b]
-      end
     end # describe "integers"
 
     describe "decimals" do
