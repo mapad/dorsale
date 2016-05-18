@@ -8,6 +8,7 @@ spec/dummy/tmp/
 spec/dummy/public/uploads/
 spec/dummy/.sass-cache
 .DS_Store
+Gemfile.lock
 
 # text editors files
 .project
