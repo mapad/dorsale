@@ -47,4 +47,5 @@ Gem::Specification.new do |s|
   s.add_dependency "mini_magick"
   s.add_dependency "rake"
   s.add_dependency "axlsx"
+  s.add_dependency "zip-zip"
 end
